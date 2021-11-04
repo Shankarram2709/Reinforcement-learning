@@ -1,0 +1,113 @@
+{
+    "data": {
+      "augmentation": {
+        "tr": {
+          "distracting_obstacles": null,
+          "flip": {
+            "lr":true,
+            "ud": false
+          },
+          "intensity_based_plane_incline": {
+            "y": null
+          },
+          "intensity_factor_range": [
+            null,
+            null
+          ],
+          "intensity_shift_range": [
+            null,
+            null
+          ],
+          "median": {
+            "propability": 0.1,
+            "size": 0.01
+          },
+          "enhancing":{
+            "sigma_s":null,
+            "sigma_r":null
+          },
+          "noise_variance": 0.1,
+          "random_rescaling_factors": {
+            "keep_aspect_ratio": true,
+            "x": [
+              1.0,
+              1.0
+            ],
+            "y": [
+              1.0,
+              1.0
+            ]
+          },
+          "random_rotation": {
+            "angle_range": [
+              -7,
+              7
+              
+            ]
+          },
+          "translate":null,
+  
+          "random_x_curves": null,
+          "salt_and_pepper": {
+            "pepper_level": 0.01,
+            "pepper_size": 3,
+            "propability": 0.1,
+            "salt_level": 0.01,
+            "salt_size": 3
+          }
+        },
+        "va": {
+          "distracting_obstacles":null,
+          "flip":{
+            "lr":true,
+            "ud": false
+          },
+          "intensity_based_plane_incline": null,
+          "intensity_factor_range": null,
+          "intensity_shift_range": null,
+          "noise_variance": null,
+          "random_rescaling_factors": null,
+          "random_rotation": null,
+          "random_x_curves": null
+        }
+      },
+      "general": {
+        "edge_thickness": 3,
+        "enable_edge_channels":false,
+        "general_rescale_factor": {
+          "x": 1,
+          "y": 1
+        },
+        "image_shape": [
+          380, 
+          240,
+          1
+        ],
+        "label_shape": [
+          1
+        ],
+        "max_value": 255,
+        "min_value": 0,
+        "tr_datapoint_list": "/home/ram/rl/tr.lst",
+        "va_datapoint_list": "/home/ram/rl/va.lst"
+      }
+    },
+    "model": {
+      "model_dir_to_load": null
+    },
+    "name": "CustomNetV2",
+    "training": {
+      "batch_size":20,
+      "epochs": 100,
+      "gpu":0,
+      "learning_rate":0.001,
+      "steps_per_epoch":75,
+      "va_steps":20,
+      "load_data_in_ram": true,
+      "replay": {
+        "buffer_size":1000,
+        "probability": 0.9
+      },
+      "save_checkpoint_periode": 5
+    }
+  }
