@@ -92,7 +92,8 @@ class Control(object):
             #from IPython import embed;embed()
             #if prediction.argmax(axis = -1)==3:
             #    continue
-            if prediction.argmax(axis=-1) is None:
+            # if no gesture action equals to 1- neutral
+            if prediction.argmax(axis=-1)==3:
                 gest = 1
                 action = gest
             else:
