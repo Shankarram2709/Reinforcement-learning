@@ -6,14 +6,12 @@ import numpy as np
 import pandas as pd
 from data import DataManager
 from utils import get_datapoint_list
-from model_res import CustomNetNetV2 
+from customnet import CustomNetNetV2 
 keras = tf.keras
 
 def classify(params,
           log_dir='log/',
-          write_events=False,
-          epochs=None,
-          labelList=None):
+          epochs=None):
     """
     train Inception model for classification (hand gestures)
     :param params: dict - holding parameter for training (see script/params.json)
@@ -117,5 +115,4 @@ if __name__ == "__main__":
 
     classify(training_params,
           log_dir='/home/ram/rl/log',
-          write_events=True,
           epochs = None)
