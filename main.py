@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     parser_train.add_argument('-p','--param-files',     dest='param_files',     type=str, help='path to *.json files containing training parameters.',  required=True)
     parser_train.add_argument('-c','--checkpoints-dir', dest='h5_dir', type=str, help='path to location where checkpoints are stored.',        required=True)
-    parser_train.add_argument('-n','--number-of-classes', dest='num_classes', type=int,  help='decide number of clases 3 or 4-based on bg', nargs=1,    default= 3)
+    parser_train.add_argument('-n','--number-of-classes', dest='num_classes', type=int,  help='decide number of clases 3 or 4-based on bg', nargs=1,    default= 4)
 
     parser_predict.add_argument('-m','--model',         dest='model_dir',   type=str,   help='path to the model directory containing params.json and weights.hdf5',     required=True)
 
@@ -83,14 +83,6 @@ if __name__ == '__main__':
         from core.predict import predict
         print('starting real time inference using webcam')
         predict(model)
-    '''
-    if args.step == 'heatmap':
-        model_path = args.model_dir
-        model = models.load_model(model_path)
-
-        from core.heatmap import introspect
-        print('Introspect Heatmaps using guided backprop')'''
-
         
 
         
