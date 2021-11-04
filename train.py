@@ -4,12 +4,13 @@ import gc
 import os
 import numpy as np
 import pandas as pd
-from data import DataManager
-from utils import get_datapoint_list
-from customnet import CustomNetNetV2 
+from core.data import DataManager
+from core.utils import get_datapoint_list, ensure_dir
+from core.customnet import CustomNetV2 
 keras = tf.keras
 
 def classify(params,
+          num_classes = 3,
           log_dir='log/',
           epochs=None):
     """
@@ -21,9 +22,7 @@ def classify(params,
     # prepare process
     if epochs is None:
         epochs = params['training']['epochs']
-        save_checkpoint_periode = params['training']['save_checkpoint_periode']
-    else:
-        save_checkpoint_periode = min(epochs, params['training']['save_checkpoint_periode'])
+    ensure_dir(log_dir + '/')
     json.dump(params, open(log_dir + '/params.json', 'w'), indent=2, sort_keys=True)
     #from IPython import embed; embed()
     # specify gpu to use for training
@@ -42,7 +41,8 @@ def classify(params,
         replay_buffer=params['training']['replay']['buffer_size'],
         replay_probability=params['training']['replay']['probability'],
         max_value=params['data']['general']['max_value'],
-        min_value=params['data']['general']['min_value'])
+        min_value=params['data']['general']['min_value'],
+        num_classes=num_classes)
     tr_dataset = tr_data_manager.get_tf_dataset()
     tr_data_iterator = tr_data_manager.get_tf_iterator()
     tr_data_manager.save_datapoint_list_as_df(outpath=log_dir + '/tr.csv')
@@ -56,7 +56,8 @@ def classify(params,
         prefetch_size=batch_size * 4,
         batch_size=batch_size,
         max_value=params['data']['general']['max_value'],
-        min_value=params['data']['general']['min_value'])
+        min_value=params['data']['general']['min_value'],
+        num_classes=num_classes)
     va_dataset = va_data_manager.get_tf_dataset()
     va_data_iterator = va_data_manager.get_tf_iterator()
     va_data_manager.save_datapoint_list_as_df(outpath=log_dir + '/va.csv')
@@ -64,9 +65,9 @@ def classify(params,
     # Create model
     model_dir_to_load = params['model']['model_dir_to_load']
     if model_dir_to_load is None:
-        inception=InceptionResNetV2(image_shape=[380,240,1],
-                                out_channel=3)
-        model = inception.get_model()
+        netv2=CustomNetV2(image_shape=[380,240,1],
+                                out_channel=num_classes)
+        model = netv2.get_model()
 
     #from IPython import embed; embed()
     model.compile(optimizer=tf.keras.optimizers.Adam(params['training']['learning_rate']),
@@ -74,7 +75,6 @@ def classify(params,
                    metrics=['accuracy'])
 
     # training procedure using callbacks for procedure observation
-    #reduce_lr=ReduceLROnPlateau(factor=0.1,patience=4,min_lr=0.00001,verbose=1)
 
     reduce_lr=keras.callbacks.ReduceLROnPlateau(
             factor=0.1,
@@ -115,4 +115,5 @@ if __name__ == "__main__":
 
     classify(training_params,
           log_dir='/home/ram/rl/log',
+          num_classes = 3,
           epochs = None)
