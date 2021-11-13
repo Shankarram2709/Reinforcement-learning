@@ -18,6 +18,7 @@ class Control(object):
         self.model = model
         self.width = width
         self.height = height
+        self.outpath = outpath
 
     @staticmethod
     def display_arr(screen, arr,video_size, transpose):
@@ -75,51 +76,55 @@ class Control(object):
         clock = pygame.time.Clock()
         action_list = []
         reward_list = []
-        while running:
-            ret,frame = cap.read()
-            x = frame.shape[0]
-            y = frame.shape[1]
-            roi = frame[100:(100+512),400:(400+x)]
-            gray =cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
-            im = Image.fromarray(gray,'L')
-            cv2.imshow("roi",gray)
-            #cv2.imshow("frame",frame)
-            #im = Image.fromarray(roi,'RGB')
-            img_array = np.array(im)
-            img_array = np.expand_dims(img_array,axis = 0)
-            img_array = np.expand_dims(img_array,axis= -1)
-            prediction = self.model.predict(img_array)
-            #from IPython import embed;embed()
-            #if prediction.argmax(axis = -1)==3:
-            #    continue
-            # if no gesture action equals to 1- neutral
-            if prediction.argmax(axis=-1)==3:
-                gest = 1
-                action = gest
-            else:
-                gest = prediction.argmax(axis=-1)
-                action = gest[0]
-            print(action)
-            action_list.append(action)
-            obs, rew, env_done, info = env.step(action)
-            reward_list.append(rew)
-            prev_obs = obs
-            #if callback is not None:
-            #    callback(prev_obs, obs, action, rew, env_done, info)
-            if obs is not None:
-                rendered = env.render(mode="rgb_array")
-                self.display_arr(screen, rendered, transpose=True, video_size=video_size)
-            #rec = pyautogui.screenshot()
-            #rec_frame = np.array(rec)
-            #video_out.write(rec_frame)
-            pygame.display.flip()
-            clock.tick(30)
-            #clock.tick(60)
-            
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+        try:
+            while running:
+                ret,frame = cap.read()
+                x = frame.shape[0]
+                y = frame.shape[1]
+                roi = frame[100:(100+512),400:(400+x)]
+                gray =cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+                im = Image.fromarray(gray,'L')
+                cv2.imshow("roi",gray)
+                #cv2.imshow("frame",frame)
+                #im = Image.fromarray(roi,'RGB')
+                img_array = np.array(im)
+                img_array = np.expand_dims(img_array,axis = 0)
+                img_array = np.expand_dims(img_array,axis= -1)
+                prediction = self.model.predict(img_array)
+                #from IPython import embed;embed()
+                #if prediction.argmax(axis = -1)==3:
+                #    continue
+                # if no gesture action equals to 1- neutral
+                if prediction.argmax(axis=-1)==3:
+                    gest = 1
+                    action = gest
+                else:
+                    gest = prediction.argmax(axis=-1)
+                    action = gest[0]
+                print(action)
+                action_list.append(action)
+                obs, rew, env_done, info = env.step(action)
+                reward_list.append(rew)
+                prev_obs = obs
+                #if callback is not None:
+                #    callback(prev_obs, obs, action, rew, env_done, info)
+                if obs is not None:
+                    rendered = env.render(mode="rgb_array")
+                    self.display_arr(screen, rendered, transpose=True, video_size=video_size)
+                #rec = pyautogui.screenshot()
+                #rec_frame = np.array(rec)
+                #video_out.write(rec_frame)
+                pygame.display.flip()
+                clock.tick(30)
+                #if 0xFF == ord('q'):
+                #    break
+                #clock.tick(60)
+                
+                cv2.waitKey(1) 
+        except KeyboardInterrupt:
+            pass
 
         df = pd.DataFrame(np.column_stack([action_list, reward_list]), 
                                columns=['actions', 'reward'])
 
-        df.to_csv(outpath+'/'+'act_rew.lst',index=False)
+        df.to_csv(self.outpath+'/'+'act_rew.lst',index=False)
