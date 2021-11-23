@@ -106,7 +106,8 @@ def classify(params,
     del va_data_iterator
     del callbacks
     tf.keras.backend.clear_session()
-    tf.reset_default_graph()
+    #tf.reset_default_graph()
+    tf.compat.v1.reset_default_graph()
     gc.collect()
 
 
