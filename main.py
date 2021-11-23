@@ -39,6 +39,10 @@ if __name__ == '__main__':
         TRAIN_PARAMS_PATHS = glob.glob(args.param_files, recursive=False) 
         TRAIN_BASE_DIR = args.h5_dir
         NUM_CLASSES = args.num_classes
+        if isinstance (NUM_CLASSES, int):
+            NUM_CLASSES = NUM_CLASSES
+        else:
+            NUM_CLASSES = NUM_CLASSES[0]
         ''''''
 
         if not os.path.isdir(TRAIN_BASE_DIR) or not os.access(TRAIN_BASE_DIR, os.R_OK):
@@ -52,7 +56,6 @@ if __name__ == '__main__':
             print('warning: no parameters for training are given')
 
         from train import classify
-
         for train_params_path in TRAIN_PARAMS_PATHS:
             if not os.path.isfile(train_params_path) or not os.access(train_params_path, os.R_OK):
                 print("param file does not exist or is not readable: {}. skip".format(train_params_path))
