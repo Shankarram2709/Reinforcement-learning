@@ -137,8 +137,8 @@ class DataManager(object):
     def _init_tf_iterator(self):
 
         self.tf_iterator = tf.compat.v1.data.make_initializable_iterator(self.tf_dataset)
-        sess = tf.compat.v1.Session()
-        sess.run(self.tf_iterator.initializer)
+        #sess = tf.compat.v1.Session()
+        #sess.run(self.tf_iterator.initializer)
         #with tf.Session() as sess:
         #  #Initialize variables
         #  sess.run(tf.global_variables_initializer())
@@ -227,7 +227,9 @@ class DataManager(object):
         file_type = path.split('.')[-1]
         class_type = os.path.split(path)
         lab = None
-        if self.num_classes>3:
+
+        #three or four class label generation
+        if self.num_classes==4:
             if "class_1" in path:
                 lab=np.array([1,0,0,0])
             if "class_2" in path:
