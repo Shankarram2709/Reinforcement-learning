@@ -3,16 +3,19 @@
 Control openai Reinforcement environment with hand gestures using tensorflow keras 
 Mountain Car V0 control using hand gestures
 
-Create list of images for training
 
 Class-0(Considered as background)
+
 Class-1(backward movement)
+
 class-2(Neutral)
+
 class-3(forward movement)
 
-![Class1](https://user-images.githubusercontent.com/50954616/146073007-92031bb6-0a50-4428-9de2-6bb392fb7f93.png) ![Class2](https://user-images.githubusercontent.com/50954616/146073389-68288a85-55a9-4c6b-941e-455f3eb10c9b.png) ![Class3](https://user-images.githubusercontent.com/50954616/146073551-630a7602-3a9d-4cae-86c0-e6517b804ae0.png)
+![Class1](https://user-images.githubusercontent.com/50954616/146073007-92031bb6-0a50-4428-9de2-6bb392fb7f93.png "class1") ![Class2](https://user-images.githubusercontent.com/50954616/146073389-68288a85-55a9-4c6b-941e-455f3eb10c9b.png "class2") ![Class3](https://user-images.githubusercontent.com/50954616/146073551-630a7602-3a9d-4cae-86c0-e6517b804ae0.png "class3")
 
 
+Create list of images for training
 ```
 python3 generate_tr_va.py path to train and val images
 ````
