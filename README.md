@@ -10,7 +10,13 @@ Class-1(backward movement)
 class-2(Neutral)
 class-3(forward movement)
 
-![Alt text](/home/ram/rl/gestures/class_2/Class2_10.png "Class-1")
+![Class1](https://user-images.githubusercontent.com/50954616/146073007-92031bb6-0a50-4428-9de2-6bb392fb7f93.png)
+
+![Class2](https://user-images.githubusercontent.com/50954616/146073389-68288a85-55a9-4c6b-941e-455f3eb10c9b.png)
+
+![Class3](https://user-images.githubusercontent.com/50954616/146073551-630a7602-3a9d-4cae-86c0-e6517b804ae0.png)
+
+
 ```
 python3 generate_tr_va.py path to train and val images
 ````
