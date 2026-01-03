@@ -1,9 +1,9 @@
-# Control of RL env
+# Control of OpenAI Gym environment using human-in-loop through real time hand gesture recognition
 
-Control openai Reinforcement environment with hand gestures using tensorflow keras 
+This repo demonstates controlling an openAI Reinforcement environment with hand gestures captured via webcam trained in Tensorflow-keras
 Mountain Car V0 control using hand gestures
 
-
+## Action Mapping
 Class-0(Considered as background)- Action space =1
 
 Class-1(backward movement)- Action space = 0
@@ -35,6 +35,20 @@ python3 main.py control -m path to trained model -o output path for action and r
 To perform real time inference on webcam
 ```
 python3 main.py predict -m path to trained model
+```
+
+## Project Structure
+```
+Reinforcement-learning/
+├── core/                   # Core modules (model architecture, utilities)
+├── main.py                # CLI entry point (train/predict/control modes)
+├── train.py               # Training logic and model compilation
+├── generate_tr_va.py      # Data preparation and list generation
+├── params.json            # Training hyperparameters and config
+├── bg_3class.h5           # Trained model (3 gesture classes)
+├── bg_4class.h5           # Trained model (4 classes with background)
+├── act_rew.lst            # Action-reward logs from RL episodes
+└── README.md              # This file
 ```
 
 # Note
