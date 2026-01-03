@@ -3,6 +3,10 @@
 This repo demonstates controlling an openAI Reinforcement environment with hand gestures captured via webcam trained in Tensorflow-keras
 Mountain Car V0 control using hand gestures
 
+## Environment
+
+![Mountain_Car](https://github.com/user-attachments/assets/9664ad74-6b11-42fe-adec-7b4ceab6d8f9)
+
 ## Action Mapping
 Class-0(Considered as background)- Action space =1
 
@@ -14,7 +18,7 @@ class-3(forward movement) - Action space = 2
 
 | ![Class1](https://user-images.githubusercontent.com/50954616/146073007-92031bb6-0a50-4428-9de2-6bb392fb7f93.png) ![Class2](https://user-images.githubusercontent.com/50954616/146073389-68288a85-55a9-4c6b-941e-455f3eb10c9b.png) ![Class3](https://user-images.githubusercontent.com/50954616/146073551-630a7602-3a9d-4cae-86c0-e6517b804ae0.png) |
 |:--:| 
-|*Class1*   *Class2*    *Class3*|
+|*Class1 (Backward)*   *Class2 (Neutral)*    *Class3 (Forward)*|
 
 
 Create list of images for training
